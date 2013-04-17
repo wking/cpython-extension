@@ -22,7 +22,7 @@ static PyMethodDef SpamMethods[] = {
 static struct PyModuleDef spammodule = {
 	PyModuleDef_HEAD_INIT,
 	"spam",   /* name of module */
-	spam_doc, /* module documentation, may be NULL */
+	NULL,     /* module documentation, may be NULL */
 	0,        /* size of per-interpreter state of the module */
 	SpamMethods
 };
