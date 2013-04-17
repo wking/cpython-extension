@@ -1,21 +1,27 @@
 #include <Python.h>
 #include <stdlib.h>
+#include <time.h>
 
 static PyObject *
-spam_system(PyObject *self, PyObject *args)
+spam_busy(PyObject *self, PyObject *args)
 {
-	const char *command;
-	int sts;
+	int seconds;
+	time_t start;
+	long int i = 0;
 
-	if (!PyArg_ParseTuple(args, "s", &command))
+	if (!PyArg_ParseTuple(args, "i", &seconds))
 		return NULL;
-	sts = system(command);
-	return PyLong_FromLong(sts);
+	Py_BEGIN_ALLOW_THREADS
+	start = time(NULL);
+	while (time(NULL) < start + seconds)
+		i++;
+	Py_END_ALLOW_THREADS
+	return PyLong_FromLong(i);
 }
 
 static PyMethodDef SpamMethods[] = {
-	{"system",  spam_system, METH_VARARGS,
-	 "Execute a shell command."},
+	{"busy",  spam_busy, METH_VARARGS,
+	 "Drop the GIL and run a busy wait for a few seconds."},
 	{NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
