@@ -1,0 +1,19 @@
+Test processing distribution on a multicore system using
+``Py_BEGIN_ALLOW_THREADS`` and ``threading.Thread``.
+
+Build with::
+
+  $ python setup.py build
+
+Test the time with::
+
+  $ time PYTHONPATH=build/lib.linux-x86_64-3.2/ ./grab-cores.py 2
+
+  real    0m10.075s
+  user    0m18.364s
+  sys     0m0.029s
+
+You may need to tweak the ``PYTHONPATH`` to match the build directory
+for your system.  The results shown are for my two-core system.
+During the run, ``top`` showed the process pegged around 195% of the
+CPU, so we are actually using all the available horsepower.
