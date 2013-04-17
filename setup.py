@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 
 spammify_module = Extension(
-    'spammify',
+    'spam',
     sources=['spammify.c'])
 
 setup(
